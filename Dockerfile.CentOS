@@ -1,0 +1,19 @@
+FROM centos:centos7
+MAINTAINER John Osborne <johnfosborneiii@gmail.com>
+
+ENV SA_PASSWORD=redhat1!
+ENV container=docker
+
+RUN yum update -y; yum clean all
+RUN yum -y install sudo sysvinit-tools wget; yum clean all
+
+#See https://hub.docker.com/r/liubin/fluentd-agent/~/dockerfile/
+RUN sed -i -e 's/Defaults    requiretty.*/ #Defaults    requiretty/g' /etc/sudoers
+
+RUN wget -O /etc/yum.repos.d/mssql-server.repo https://packages.microsoft.com/config/rhel/7/mssql-server.repo
+RUN yum install -y mssql-server; yum clean all
+
+RUN /opt/mssql/bin/sqlservr-setup --accept-eula --set-sa-password --start-service --enable-service
+
+EXPOSE 1433
+CMD [ "/sbin/init" ]
