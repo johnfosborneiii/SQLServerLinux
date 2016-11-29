@@ -24,6 +24,9 @@ These containers use systemd inside the container to run SQL Server. Currently, 
     # docker run -d -p 1433:1433 --name rhel7sqlserver johnfosborneiii/rhel7sqlserver
     # docker run --privileged  -d -p 1433:1433 --name centos7sqlserver johnfosborneiii/centos7sqlserver 
 
+Note: Running privileged containers adds a lot of security risk since your container is no longer contained. It is not recommended. I only provide it as an option here for CentOS as proof of concept. For more information on running systemd inside of a unprivileged container visit:
+http://developers.redhat.com/blog/2016/09/13/running-systemd-in-a-non-privileged-container/
+
 ### Building the containers ###
 
 Setup

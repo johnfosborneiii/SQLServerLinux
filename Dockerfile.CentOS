@@ -2,7 +2,7 @@ FROM centos:centos7
 MAINTAINER John Osborne <johnfosborneiii@gmail.com>
 
 ENV SA_PASSWORD=redhat1!
-ENV container=docker
+ENV container docker
 
 RUN yum update -y; yum clean all
 RUN yum -y install sudo sysvinit-tools wget; yum clean all
@@ -15,5 +15,8 @@ RUN yum install -y mssql-server; yum clean all
 
 RUN /opt/mssql/bin/sqlservr-setup --accept-eula --set-sa-password --start-service --enable-service
 
+STOPSIGNAL SIGRTMIN+3
+
 EXPOSE 1433
+
 CMD [ "/sbin/init" ]
